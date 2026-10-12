@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notícia — Oeiras OnLine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/identidade/logos/favicon.png">
+  <meta name="theme-color" content="#001531">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="noticia">
+  <main class="wrap article">
+    <article class="inner">
+      <div class="crumbs" id="crumbs"></div>
+      <span id="chip"></span>
+      <h1 id="t"></h1>
+      <p class="sub" id="sub"></p>
+
+      <div class="byline">
+        <div class="av"><img src="assets/identidade/logos/simbolo-on-branco.png" alt=""></div>
+        <div><b id="autor"></b><span id="quando"></span></div>
+        <div class="share">
+          <button class="icon-btn" data-share aria-label="Compartilhar"><i data-lucide="share-2"></i></button>
+          <a class="icon-btn" href="#" aria-label="WhatsApp"><i data-lucide="message-circle"></i></a>
+          <a class="icon-btn" href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        </div>
+      </div>
+
+      <figure class="article-img"><img id="hero-img" alt=""><figcaption>Foto ilustrativa · Oeiras OnLine</figcaption></figure>
+
+      <!-- Corpo de exemplo — virá do painel administrativo -->
+      <div class="prose">
+        <p>Este é um texto de exemplo para o esboço do portal. Aqui entra o conteúdo completo da matéria, com o lide respondendo o que aconteceu, quem está envolvido, quando, onde e por quê.</p>
+        <p>O segundo parágrafo aprofunda o assunto com dados, contexto e falas de fontes ouvidas pela reportagem. A ideia é manter parágrafos curtos, que facilitam a leitura no celular.</p>
+        <blockquote>“Uma citação de destaque da matéria aparece assim, chamando a atenção do leitor.”</blockquote>
+        <h2>Intertítulo da matéria</h2>
+        <p>Intertítulos ajudam a dividir textos mais longos. Abaixo, um exemplo de foto com legenda dentro do corpo da notícia.</p>
+        <figure>
+          <img src="https://picsum.photos/seed/oeiras-corpo/1200/700" alt="">
+          <figcaption>Legenda da foto · Foto: Oeiras OnLine</figcaption>
+        </figure>
+        <p>O encerramento traz serviço (datas, endereços, telefones) ou os próximos passos do caso, quando houver.</p>
+      </div>
+
+      <div class="tags"><a href="#">#OeirasDoPará</a><a href="#">#Notícias</a><a href="#">#Cidade</a></div>
+
+      <div class="ad" style="min-height:120px;margin-bottom:24px"><div class="deco"></div><div><h3 style="font-size:20px">Espaço publicitário</h3><p>Banner 728×90</p></div></div>
+    </article>
+
+    <section class="block">
+      <div class="sec-head"><h2><i data-lucide="newspaper"></i> Leia também</h2><a class="more" href="noticias.html">Ver todas <i data-lucide="arrow-right"></i></a></div>
+      <div class="cards" id="related" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

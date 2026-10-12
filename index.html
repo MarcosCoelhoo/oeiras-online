@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oeiras OnLine — A notícia da nossa terra</title>
+  <meta name="description" content="Portal de notícias de Oeiras do Pará. Notícias locais, serviços e comunicados oficiais em tempo real.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/identidade/logos/favicon.png">
+  <meta name="theme-color" content="#001531">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="home">
+
+  <!-- ÚLTIMA HORA -->
+  <div class="ticker">
+    <div class="wrap">
+      <span class="label">ÚLTIMA HORA</span>
+      <div class="track-mask"><div class="track" id="ticker"></div></div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-box">
+      <div class="bg" style="background-image:url('https://picsum.photos/seed/oeiras-hero/1800/1000')"></div>
+      <div class="hero-in">
+        <div>
+          <span class="chip-edicao"><span class="dot"></span>Portal de notícias • Oeiras do Pará</span>
+          <div class="hero-title">
+            <h1>A notícia da<br>nossa terra</h1>
+            <span class="bar"></span>
+          </div>
+          <p class="lead"><i data-lucide="map-pin"></i> Notícias, serviços e comunicados em tempo real</p>
+        </div>
+
+        <div class="live-card" id="aovivo">
+          <button class="play" aria-label="Ouvir ao vivo"><i data-lucide="play"></i></button>
+          <div class="meta">
+            <div class="kicker">RÁDIO / TV <span class="badge-live">AO VIVO</span></div>
+            <h4>Oeiras OnLine</h4>
+            <div class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <i data-lucide="volume-2" style="color:var(--muted)"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+
+    <!-- ACESSO RÁPIDO -->
+    <section class="block">
+      <div class="sec-head"><h2>Acesso Rápido</h2></div>
+      <div class="quick" id="quick"></div>
+    </section>
+
+    <!-- DESTAQUES DO DIA -->
+    <section class="block" style="padding-top:4px">
+      <div class="sec-head"><h2><i data-lucide="flame"></i> Destaques do Dia</h2></div>
+      <div class="carousel">
+        <button class="car-btn prev" id="prev" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
+        <div class="slides" id="slides"></div>
+        <button class="car-btn next" id="next" aria-label="Próximo"><i data-lucide="chevron-right"></i></button>
+      </div>
+      <div class="dots" id="dots"></div>
+    </section>
+
+    <!-- PUBLICIDADE -->
+    <section class="block" style="padding-top:4px">
+      <div class="ad">
+        <div class="deco"></div>
+        <div>
+          <h3>Sua marca aqui, vista por toda <span class="text-red">Oeiras do Pará</span></h3>
+          <p>Espaço publicitário · banner 1200×300</p>
+          <a class="cta" href="#">Anuncie no Oeiras OnLine <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATUALIZAÇÕES -->
+    <section class="block">
+      <div class="news-layout">
+        <div>
+          <div class="sec-head"><h2><i data-lucide="newspaper"></i> Atualizações</h2><a class="more" href="noticias.html">Ver todas <i data-lucide="arrow-right"></i></a></div>
+          <div class="filters" id="filters"></div>
+          <div id="lead"></div>
+          <div class="cards" id="cards"></div>
+          <div class="load-more"><button class="btn ghost" id="more">Carregar mais notícias</button></div>
+        </div>
+
+        <aside class="side">
+          <div class="panel">
+            <div class="weather">
+              <i data-lucide="cloud-sun"></i>
+              <div><span class="t">31°</span><small>Oeiras do Pará · parcialmente nublado</small></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3><i data-lucide="trending-up" style="color:var(--red)"></i> Mais lidas</h3>
+            <div class="rank" id="rank"></div>
+          </div>
+          <div class="panel">
+            <h3><i data-lucide="phone" style="color:var(--blue-2)"></i> Telefones úteis</h3>
+            <div class="phones" id="phones"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="block">
+      <div class="insta">
+        <div class="insta-head">
+          <div class="avatar"><span><img src="assets/identidade/logos/simbolo-on-branco.png" alt=""></span></div>
+          <div><b>@oeirasonline</b><small>Oeiras OnLine · Oeiras do Pará</small></div>
+          <a class="follow" href="#">Seguir</a>
+        </div>
+        <div class="insta-grid" id="insta"></div>
+      </div>
+    </section>
+
+    <!-- COLUNISTAS -->
+    <section class="block">
+      <div class="sec-head"><h2><i data-lucide="pen-line"></i> Opinião &amp; Colunistas</h2></div>
+      <div class="cols" id="cols"></div>
+    </section>
+
+    <!-- NOSSA TERRA -->
+    <section class="block">
+      <div class="story">
+        <img src="https://picsum.photos/seed/oeiras-terra/1600/800" alt="">
+        <div class="ov">
+          <span class="chip-edicao"><span class="dot"></span>Conheça</span>
+          <h2>Oeiras do Pará</h2>
+          <p>Terra de rios, igarapés, açaí e gente acolhedora. Um espaço para contar a história, as tradições e o dia a dia do povo oeirense. (Texto de exemplo — substitua pela história oficial do município.)</p>
+        </div>
+      </div>
+      <div class="sec-head" style="margin-top:22px"><h2><i data-lucide="utensils"></i> Sabor da Nossa Terra</h2></div>
+      <div class="guia" id="guia"></div>
+    </section>
+
+    <!-- ENVIE + MURAL -->
+    <section class="block" id="envie">
+      <div class="split">
+        <div class="send">
+          <h2>Envie sua pauta</h2>
+          <p>Viu algo acontecendo na cidade? Mande sua denúncia, sugestão, foto ou vídeo para a redação.</p>
+          <form id="pauta">
+            <input placeholder="Seu nome" required>
+            <input placeholder="Bairro ou comunidade">
+            <textarea rows="3" placeholder="Conte o que aconteceu..." required></textarea>
+            <div class="row">
+              <button class="btn red" type="submit"><i data-lucide="send"></i> Enviar</button>
+              <a class="btn wa" href="#"><i data-lucide="message-circle"></i> WhatsApp da redação</a>
+            </div>
+          </form>
+        </div>
+        <div>
+          <div class="sec-head"><h2><i data-lucide="messages-square"></i> Mural dos Leitores</h2><a class="more" href="#">Ver todos <i data-lucide="arrow-right"></i></a></div>
+          <div class="mural" id="mural"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
