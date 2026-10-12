@@ -1,10 +1,10 @@
 // Conteúdo de exemplo (esboço) — substitua pelas notícias reais / API do painel.
 window.OO = window.OO || {};
 
-// Logos da nova identidade (assets/identidade/logos)
-OO.LOGO = "assets/identidade/logos/logo-horizontal-azul.png";          // para fundo branco
-OO.LOGO_BRANCO = "assets/identidade/logos/logo-horizontal-branco.png"; // para fundo azul
-OO.SIMBOLO_BRANCO = "assets/identidade/logos/simbolo-on-branco.png";
+// Logos da nova identidade (assets/IDENTIDADE/logos)
+OO.LOGO = "assets/IDENTIDADE/logos/logo-horizontal-azul.png";          // para fundo branco
+OO.LOGO_BRANCO = "assets/IDENTIDADE/logos/logo-horizontal-branco.png"; // para fundo azul
+OO.SIMBOLO_BRANCO = "assets/IDENTIDADE/logos/simbolo-on-branco.png";
 
 OO.categorias = [
   { slug: "cidade",     nome: "Cidade",     icon: "building-2" },
