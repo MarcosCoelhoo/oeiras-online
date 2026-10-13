@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oeiras Online — A notícia da nossa terra</title>
   <meta name="description" content="Portal de notícias de Oeiras do Pará. Notícias locais, serviços e comunicados oficiais em tempo real.">
+  <link rel="canonical" href="https://www.oeirasonline.com.br/">
+  <meta property="og:site_name" content="Oeiras Online">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.oeirasonline.com.br/">
+  <meta property="og:title" content="Oeiras Online — A notícia da nossa terra">
+  <meta property="og:description" content="Portal de notícias de Oeiras do Pará. Notícias locais, serviços e comunicados oficiais em tempo real.">
+  <meta property="og:image" content="https://www.oeirasonline.com.br/assets/IDENTIDADE/logos/og-oeiras-online.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/IDENTIDADE/logos/favicon.png">
@@ -58,7 +66,7 @@
         <div>
           <h3>Sua marca aqui, vista por toda <span class="text-red">Oeiras do Pará</span></h3>
           <p>Espaço publicitário · banner 1200×300</p>
-          <a class="cta" href="#">Anuncie no Oeiras Online <i data-lucide="arrow-right"></i></a>
+          <a class="cta" href="#envie">Anuncie no Oeiras Online <i data-lucide="arrow-right"></i></a>
         </div>
       </div>
     </section>
@@ -75,10 +83,10 @@
         </div>
 
         <aside class="side">
-          <div class="panel">
+          <div class="panel" id="clima" hidden>
             <div class="weather">
-              <i data-lucide="cloud-sun"></i>
-              <div><span class="t">31°</span><small>Oeiras do Pará · parcialmente nublado</small></div>
+              <i data-lucide="cloud-sun" id="clima-ic"></i>
+              <div><span class="t" id="clima-t"></span><small id="clima-d"></small></div>
             </div>
           </div>
           <div class="panel">
@@ -113,37 +121,45 @@
 
     <!-- NOSSA TERRA -->
     <section class="block">
-      <div class="story">
-        <img src="https://picsum.photos/seed/oeiras-terra/1600/800" alt="">
+      <div class="story story-marca">
+        <img class="story-logo" src="assets/IDENTIDADE/logos/logo-vertical-branco.png" alt="">
         <div class="ov">
           <span class="chip-edicao"><span class="dot"></span>Conheça</span>
           <h2>Oeiras do Pará</h2>
-          <p>Terra de rios, igarapés, açaí e gente acolhedora. Um espaço para contar a história, as tradições e o dia a dia do povo oeirense. (Texto de exemplo — substitua pela história oficial do município.)</p>
+          <p>Terra de rios, igarapés, açaí e gente acolhedora. Um espaço para contar a história, as tradições e o dia a dia do povo oeirense.</p>
         </div>
       </div>
       <div class="sec-head" style="margin-top:22px"><h2><i data-lucide="utensils"></i> Sabor da Nossa Terra</h2></div>
       <div class="guia" id="guia"></div>
     </section>
 
-    <!-- ENVIE + MURAL -->
+    <!-- ENVIE SUA PAUTA (grava em public.pautas; a redação lê no painel /admin) -->
     <section class="block" id="envie">
       <div class="split">
         <div class="send">
           <h2>Envie sua pauta</h2>
-          <p>Viu algo acontecendo na cidade? Mande sua denúncia, sugestão, foto ou vídeo para a redação.</p>
-          <form id="pauta">
-            <input placeholder="Seu nome" required>
-            <input placeholder="Bairro ou comunidade">
-            <textarea rows="3" placeholder="Conte o que aconteceu..." required></textarea>
+          <p>Viu algo acontecendo na cidade? Mande sua denúncia, sugestão ou informação para a redação.</p>
+          <form id="pauta" novalidate>
+            <input name="nome" placeholder="Seu nome *" required maxlength="120" autocomplete="name">
+            <input name="contato" placeholder="WhatsApp ou e-mail para retorno (opcional)" maxlength="120">
+            <input name="local" placeholder="Bairro ou comunidade" maxlength="120">
+            <textarea name="mensagem" rows="4" placeholder="Conte o que aconteceu… *" required maxlength="2000"></textarea>
+            <input name="site" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="row">
-              <button class="btn red" type="submit"><i data-lucide="send"></i> Enviar</button>
-              <a class="btn wa" href="#"><i data-lucide="message-circle"></i> WhatsApp da redação</a>
+              <button class="btn red" type="submit"><i data-lucide="send"></i> Enviar para a redação</button>
             </div>
+            <p class="form-msg" id="pauta-msg" role="status" hidden></p>
           </form>
         </div>
-        <div>
-          <div class="sec-head"><h2><i data-lucide="messages-square"></i> Mural dos Leitores</h2><a class="more" href="#">Ver todos <i data-lucide="arrow-right"></i></a></div>
-          <div class="mural" id="mural"></div>
+        <div class="panel envie-info">
+          <h3><i data-lucide="shield-check"></i> Como funciona</h3>
+          <ul>
+            <li>Sua mensagem chega direto à redação do Oeiras Online.</li>
+            <li>Nada é publicado automaticamente: toda informação é apurada antes de virar notícia.</li>
+            <li>Seu nome e contato não são divulgados sem sua autorização.</li>
+            <li>Quer anunciar? Use o formulário e informe seu contato.</li>
+          </ul>
+          <a class="more-link" href="privacidade.html">Política de privacidade →</a>
         </div>
       </div>
     </section>

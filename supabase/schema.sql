@@ -165,3 +165,42 @@ create policy "admin atualiza imagens" on storage.objects
 drop policy if exists "admin exclui imagens" on storage.objects;
 create policy "admin exclui imagens" on storage.objects
   for delete to authenticated using (bucket_id = 'noticias' and public.is_admin());
+
+-- ---------- Pautas enviadas pelos leitores ("Envie sua pauta") ----------
+-- Visitantes só podem ENVIAR (insert). Ler, marcar como lida e excluir: somente administradores.
+create table if not exists public.pautas (
+  id         uuid primary key default gen_random_uuid(),
+  nome       text not null,
+  contato    text,
+  local      text,
+  mensagem   text not null,
+  lida       boolean not null default false,
+  criado_em  timestamptz not null default now()
+);
+alter table public.pautas drop constraint if exists pautas_campos_validos;
+alter table public.pautas add constraint pautas_campos_validos check (
+  char_length(btrim(nome)) between 2 and 120
+  and char_length(btrim(mensagem)) between 10 and 2000
+  and (contato is null or char_length(contato) <= 120)
+  and (local is null or char_length(local) <= 120)
+);
+create index if not exists pautas_recentes_idx on public.pautas (criado_em desc);
+alter table public.pautas enable row level security;
+
+drop policy if exists "qualquer um envia pauta" on public.pautas;
+create policy "qualquer um envia pauta" on public.pautas
+  for insert to anon, authenticated with check (lida = false);
+drop policy if exists "admin lê pautas" on public.pautas;
+create policy "admin lê pautas" on public.pautas
+  for select to authenticated using (public.is_admin());
+drop policy if exists "admin atualiza pautas" on public.pautas;
+create policy "admin atualiza pautas" on public.pautas
+  for update to authenticated using (public.is_admin()) with check (public.is_admin());
+drop policy if exists "admin exclui pautas" on public.pautas;
+create policy "admin exclui pautas" on public.pautas
+  for delete to authenticated using (public.is_admin());
+
+revoke all on public.pautas from anon, authenticated;
+-- o visitante só preenche estes campos (id, lida e criado_em ficam com os valores padrão)
+grant insert (nome, contato, local, mensagem) on public.pautas to anon, authenticated;
+grant select, update, delete on public.pautas to authenticated;

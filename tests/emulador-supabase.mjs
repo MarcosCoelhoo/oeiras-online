@@ -112,7 +112,7 @@ async function rest(req, res, url, corpo) {
     const r = await comoPapel(req, () => fn === "is_admin" ? db.query("select public.is_admin() as r") : db.query("select public.registrar_visualizacao($1) as r", [args.p_id]));
     return enviar(res, 200, r.rows[0].r ?? null);
   }
-  if (!["noticias", "admins"].includes(tabela)) throw httpErr(404, "42P01", "tabela não encontrada");
+  if (!["noticias", "admins", "pautas"].includes(tabela)) throw httpErr(404, "42P01", "tabela não encontrada");
   const T = `public.${ident(tabela)}`;
   const params = [];
   let rows, total = null;
@@ -126,7 +126,9 @@ async function rest(req, res, url, corpo) {
       const dados = [].concat(JSON.parse(corpo)); rows = [];
       for (const d of dados) {
         const ks = Object.keys(d), ps = ks.map((k) => d[k]);
-        rows.push(...(await db.query(`insert into ${T} (${ks.map(ident).join(",")}) values (${ks.map((_, i) => "$" + (i + 1)).join(",")}) returning ${colunas(sp)}`, ps)).rows);
+        // como o PostgREST: só usa RETURNING quando o cliente pede o registro de volta
+        const ret = prefer.includes("return=representation") ? ` returning ${colunas(sp)}` : "";
+        rows.push(...(await db.query(`insert into ${T} (${ks.map(ident).join(",")}) values (${ks.map((_, i) => "$" + (i + 1)).join(",")})${ret}`, ps)).rows);
       }
     } else if (req.method === "PATCH") {
       const d = JSON.parse(corpo), ks = Object.keys(d);

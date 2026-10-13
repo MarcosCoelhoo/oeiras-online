@@ -95,6 +95,32 @@
       return data ? doBanco(data) : null;
     },
 
+    // formulário "Envie sua pauta" (a política RLS só permite inserir; ninguém lê sem ser admin)
+    async enviarPauta(d) {
+      if (!ativo) throw new Error("Supabase não configurado");
+      const sb = await client();
+      const { error } = await sb.from("pautas").insert({
+        nome: d.nome.slice(0, 120), contato: d.contato.slice(0, 120) || null,
+        local: d.local.slice(0, 120) || null, mensagem: d.mensagem.slice(0, 2000),
+      });
+      if (error) throw error;
+    },
+
+    // clima atual de Oeiras do Pará (cache de 30 min no navegador)
+    async clima() {
+      try { const c = JSON.parse(sessionStorage.getItem("oo-clima") || "null"); if (c && Date.now() - c.t < 18e5) return c; } catch {}
+      const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=-2.0042&longitude=-49.8572&current=temperature_2m,weather_code,is_day&timezone=America%2FBelem");
+      if (!r.ok) return null;
+      const { current: a } = await r.json();
+      const w = a.weather_code, dia = a.is_day === 1;
+      const [desc, icon] = w === 0 ? ["céu limpo", dia ? "sun" : "moon"] : w <= 2 ? ["parcialmente nublado", dia ? "cloud-sun" : "cloud-moon"]
+        : w === 3 ? ["nublado", "cloud"] : w <= 48 ? ["neblina", "cloud-fog"] : w <= 57 ? ["garoa", "cloud-drizzle"]
+        : w <= 67 || (w >= 80 && w <= 82) ? ["chuva", "cloud-rain"] : w >= 95 ? ["trovoadas", "cloud-lightning"] : ["nublado", "cloud"];
+      const c = { temp: Math.round(a.temperature_2m), desc, icon, t: Date.now() };
+      try { sessionStorage.setItem("oo-clima", JSON.stringify(c)); } catch {}
+      return c;
+    },
+
     // conta uma visualização por sessão do navegador
     async registrarVisualizacao(id) {
       if (!ativo) return;

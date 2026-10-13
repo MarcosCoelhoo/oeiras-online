@@ -22,12 +22,9 @@
       <div class="wrap">
         <span class="u-item"><i data-lucide="calendar"></i>${hoje}</span>
         <span class="u-item hide-sm"><i data-lucide="map-pin"></i>Oeiras do Pará — PA</span>
-        <span class="u-item hide-sm"><i data-lucide="cloud-sun"></i>31°</span>
+        <span class="u-item hide-sm" id="u-clima" hidden><i data-lucide="cloud-sun"></i><span></span></span>
         <div class="u-social">
           <a href="${OO.INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram do Oeiras Online"><i data-lucide="instagram"></i></a>
-          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
-          <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
-          <a href="#" aria-label="WhatsApp"><i data-lucide="message-circle"></i></a>
         </div>
       </div>
     </div>
@@ -63,7 +60,7 @@
         <a href="index.html" class="hl"><span class="sq"><i data-lucide="house"></i></span>Início</a>
         <a href="noticias.html" class="hl"><span class="sq"><i data-lucide="newspaper"></i></span>Todas as notícias</a>
         ${OO.categorias.map((c) => `<a href="noticias.html?cat=${c.slug}"><span class="sq${c.logo ? " sq-logo" : ""}">${catIcon(c)}</span>${c.nome}</a>`).join("")}
-        <a href="index.html#envie"><span class="sq" style="background:#22c55e"><i data-lucide="message-circle"></i></span>Envie sua pauta</a>
+        <a href="index.html#envie" class="hl"><span class="sq"><i data-lucide="send"></i></span>Envie sua pauta</a>
       </nav>
     </aside>`;
 
@@ -76,15 +73,12 @@
             <p style="margin-top:12px;max-width:360px">A notícia da nossa terra. Portal de notícias de Oeiras do Pará — notícias locais, serviços e comunicados em tempo real.</p>
             <div class="social">
               <a class="icon-btn" href="${OO.INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram do Oeiras Online"><i data-lucide="instagram"></i></a>
-              <a class="icon-btn" href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
-              <a class="icon-btn" href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
-              <a class="icon-btn" href="#" aria-label="WhatsApp"><i data-lucide="message-circle"></i></a>
             </div>
           </div>
           <div><h4>Editorias</h4><ul class="two-cols">${OO.categorias.map((c) => `<li><a href="noticias.html?cat=${c.slug}">${c.nome}</a></li>`).join("")}</ul></div>
           <div><h4>Institucional</h4><ul>
-            <li><a href="#">Quem somos</a></li><li><a href="#">Anuncie aqui</a></li>
-            <li><a href="index.html#envie">Fale com a redação</a></li><li><a href="#">Política de privacidade</a></li>
+            <li><a href="index.html#envie">Fale com a redação</a></li><li><a href="index.html#envie">Anuncie aqui</a></li>
+            <li><a href="privacidade.html">Política de privacidade</a></li>
           </ul></div>
         </div>
         <div class="copy"><span>© ${new Date().getFullYear()} Oeiras Online. Todos os direitos reservados.</span><span>www.oeirasonline.com.br · Oeiras do Pará — PA</span></div>
@@ -268,12 +262,27 @@
     }).catch((e) => falha($("#rank"), e));
     $("#phones").innerHTML = OO.telefones.map((t) => `<a href="tel:${t.numero}"><i data-lucide="${t.icon}"></i><div><span class="n">${t.numero}</span><small>${t.nome}</small></div></a>`).join("");
 
-    // Guia e mural
+    // Guia
     $("#guia").innerHTML = OO.guia.map((g) => `<div><i data-lucide="${g.icon}"></i><div><h4>${g.titulo}</h4><p>${g.texto}</p></div></div>`).join("");
-    $("#mural").innerHTML = OO.mural.map((m) => `<div class="msg"><p>${m.texto}</p><div class="who"><i>${m.nome[0]}</i>${m.nome} · ${m.data}</div></div>`).join("");
 
-    // Formulário de pauta
-    $("#pauta").addEventListener("submit", (e) => { e.preventDefault(); e.target.reset(); toast("Obrigado! Sua pauta foi enviada para a redação."); });
+    // Formulário de pauta: grava no banco (public.pautas) e a redação lê no painel
+    $("#pauta").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const f = e.target, msg = $("#pauta-msg"), btn = f.querySelector("button[type=submit]");
+      const aviso = (t, erro) => { msg.hidden = false; msg.textContent = t; msg.classList.toggle("erro", !!erro); };
+      const dados = { nome: f.nome.value.trim(), contato: f.contato.value.trim(), local: f.local.value.trim(), mensagem: f.mensagem.value.trim() };
+      if (f.site.value) return aviso("Obrigado! Sua mensagem foi enviada para a redação."); // armadilha para robôs
+      if (dados.nome.length < 2) return aviso("Informe seu nome.", true);
+      if (dados.mensagem.length < 10) return aviso("Conte um pouco mais sobre o que aconteceu (mínimo 10 caracteres).", true);
+      const original = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Enviando…';
+      try {
+        await OO.api.enviarPauta(dados);
+        f.reset(); aviso("Obrigado! Sua mensagem foi enviada para a redação.");
+      } catch (err) {
+        console.error(err); aviso("Não foi possível enviar agora. Verifique sua conexão e tente novamente.", true);
+      }
+      btn.disabled = false; btn.innerHTML = original; refreshIcons();
+    });
   }
 
   // ---------- Listagem / categoria / busca ----------
@@ -333,6 +342,9 @@
       if (n.img) { fig.hidden = false; $("#hero-img").src = n.img; $("#hero-img").alt = n.legenda || ""; $("#legenda").textContent = n.legenda || ""; $("#legenda").hidden = !n.legenda; }
       else fig.hidden = true;
       $("#corpo").innerHTML = limpar(n.conteudo);
+      const url = encodeURIComponent(location.href.split("#")[0]), txt = encodeURIComponent(n.titulo);
+      $("#share-wa").href = `https://wa.me/?text=${txt}%20${url}`;
+      $("#share-fb").href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
       $("#corpo").querySelectorAll("a[href^='http']").forEach((a) => { a.target = "_blank"; a.rel = "noopener"; });
       refreshIcons();
     };
@@ -362,6 +374,17 @@
       } catch (e) { falha($("article.inner"), e); }
     })();
   }
+
+  // Clima atual em Oeiras do Pará (Open-Meteo, sem chave). Se falhar, o bloco simplesmente não aparece.
+  OO.api.clima().then((c) => {
+    if (!c) return;
+    const u = $("#u-clima"); u.querySelector("span").textContent = `${c.temp}°`; u.hidden = false;
+    const ic = document.createElement("i"); ic.setAttribute("data-lucide", c.icon);
+    u.querySelector("svg, i")?.replaceWith(ic);
+    const p = $("#clima");
+    if (p) { $("#clima-t").textContent = `${c.temp}°`; $("#clima-d").textContent = `Oeiras do Pará · ${c.desc}`; $("#clima-ic").setAttribute("data-lucide", c.icon); p.hidden = false; }
+    refreshIcons();
+  }).catch(() => {});
 
   refreshIcons();
 })();

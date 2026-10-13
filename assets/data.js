@@ -74,9 +74,3 @@ OO.telefones = [
   { nome: "Bombeiros",       numero: "193", icon: "flame" },
   { nome: "Defesa Civil",    numero: "199", icon: "life-buoy" },
 ];
-
-OO.mural = [
-  { nome: "Maria S.",   data: "11/10/2026", texto: "Parabéns pelo portal! Agora fica fácil acompanhar tudo que acontece na cidade." },
-  { nome: "João B.",    data: "10/10/2026", texto: "Ótima cobertura do campeonato. Rumo à final!" },
-  { nome: "Ana P.",     data: "09/10/2026", texto: "Seria ótimo uma matéria sobre a estrada da comunidade. Obrigada!" },
-];

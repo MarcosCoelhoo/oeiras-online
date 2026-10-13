@@ -425,3 +425,33 @@ footer .copy { border-top: 1px solid rgba(255,255,255,.12); margin-top: 24px; pa
 .prose a { color: var(--red); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
 .prose h3 { font-size: 19px; margin: 24px 0 10px; font-weight: 800; }
 .prose img { border-radius: 12px; margin: 18px 0; }
+
+/* Envie sua pauta */
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form-msg { font-size: 14px; font-weight: 700; background: rgba(255,255,255,.12); border-radius: 10px; padding: 10px 12px; }
+.form-msg.erro { background: #fff; color: var(--red-dark); }
+.send .btn.red { background: #fff; color: var(--navy); }
+.send .btn.red:hover { background: #f1f3f7; }
+.envie-info { align-self: start; }
+.envie-info ul { list-style: none; display: grid; gap: 10px; margin-bottom: 14px; }
+.envie-info li { position: relative; padding-left: 20px; font-size: 14px; color: var(--text); }
+.envie-info li::before { content: ""; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+.more-link { color: var(--red); font-weight: 800; font-size: 14px; }
+
+/* Conheça Oeiras (sem foto: identidade da marca) */
+.story-marca { background: var(--navy); min-height: 260px; }
+.story-marca::before { content: ""; position: absolute; right: -70px; top: -70px; width: 300px; height: 300px; border-radius: 50%; border: 46px solid rgba(255,255,255,.06); }
+.story-marca .story-logo { position: absolute; inset: auto 32px 50% auto; transform: translateY(50%); width: clamp(90px, 18vw, 170px); height: auto; object-fit: contain; opacity: .95; }
+.story-marca .ov { background: none; padding-right: clamp(130px, 26vw, 240px); }
+@media (max-width: 560px) { .story-marca .story-logo { inset: 22px auto auto 28px; transform: none; width: 84px; } .story-marca .ov { padding: 130px 28px 28px; } }
+
+/* Páginas simples (privacidade, 404) */
+.pagina { max-width: 760px; margin: 0 auto; padding: 36px 0 20px; }
+.pagina h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 900; text-transform: uppercase; }
+.pagina h1::after { content: ""; display: block; width: 80px; height: 6px; background: var(--red); margin-top: 10px; }
+.pagina h2 { font-size: 18px; margin: 26px 0 8px; font-weight: 800; }
+.pagina p, .pagina li { font-size: 16px; line-height: 1.75; color: var(--text); margin-bottom: 10px; }
+.pagina ul { padding-left: 20px; }
+.erro-404 { text-align: center; padding: 70px 0 40px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.erro-404 b { font-family: var(--font-h); font-size: clamp(70px, 16vw, 130px); font-weight: 900; color: var(--navy); line-height: 1; }
+.erro-404 b span { color: var(--red); }

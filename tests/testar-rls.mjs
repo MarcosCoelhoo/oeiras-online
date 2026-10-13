@@ -131,5 +131,25 @@ espera("admin não grava em outro bucket", !!r.error, r);
 r = await como("postgres", null, "select public, file_size_limit, allowed_mime_types from storage.buckets where id = 'noticias'");
 espera("bucket público com limite de 5 MB", r.rows?.[0].public === true && Number(r.rows[0].file_size_limit) === 5242880, r);
 
+console.log("Pautas dos leitores");
+r = await como("anon", null, "insert into public.pautas (nome, mensagem, contato) values ('Leitor', 'Buraco enorme na rua principal do bairro', '9199999-0000')");
+espera("visitante envia pauta", !r.error, r);
+r = await como("anon", null, "select count(*)::int n from public.pautas");
+espera("visitante não lê pautas (nem a própria)", !!r.error || r.rows?.[0].n === 0, r);
+r = await como("anon", null, "insert into public.pautas (nome, mensagem, lida) values ('Leitor', 'Tentando marcar como lida já na criação', true)");
+espera("visitante não define campo 'lida'", !!r.error, r);
+r = await como("anon", null, "insert into public.pautas (nome, mensagem, criado_em) values ('Leitor', 'Tentando forjar a data de envio da pauta', '2000-01-01')");
+espera("visitante não forja a data", !!r.error, r);
+r = await como("anon", null, "insert into public.pautas (nome, mensagem) values ('L', 'curta')");
+espera("banco recusa pauta incompleta", /pautas_campos_validos/.test(r.error || ""), r);
+r = await como("authenticated", COMUM, "select count(*)::int n from public.pautas");
+espera("usuário comum não lê pautas", !!r.error || r.rows?.[0].n === 0, r);
+r = await como("authenticated", ADMIN, "update public.pautas set lida = true returning lida");
+espera("admin lê e marca como lida", r.rows?.length === 1 && r.rows[0].lida === true, r);
+r = await como("anon", null, "delete from public.pautas returning id");
+espera("visitante não exclui pautas", !!r.error || r.rows?.length === 0, r);
+r = await como("authenticated", ADMIN, "delete from public.pautas returning id");
+espera("admin exclui pauta", r.rows?.length === 1, r);
+
 console.log(`\n${ok} testes passaram, ${falhas} falharam.`);
 process.exit(falhas ? 1 : 0);

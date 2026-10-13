@@ -186,3 +186,15 @@ em { color: var(--red); font-style: normal; }
 .toast.erro { background: #a10000; }
 .toast.out { opacity: 0; transform: translateY(-8px); }
 @keyframes entra { from { opacity: 0; transform: translateY(-8px); } }
+
+/* pautas */
+.nav-count { background: var(--red); color: #fff; font-size: 11px; border-radius: 999px; padding: 1px 7px; margin-left: 2px; }
+.seg { display: flex; gap: 8px; }
+.pautas { display: grid; gap: 12px; }
+.pauta { background: #fff; border: 1px solid var(--border); border-left: 5px solid var(--red); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px; }
+.pauta.lida { border-left-color: var(--border); opacity: .85; }
+.pauta header { display: flex; gap: 6px; flex-wrap: wrap; align-items: baseline; color: var(--navy); }
+.pauta header .muted { margin-left: auto; font-size: 12px; }
+.pauta p { font-size: 15px; white-space: normal; overflow-wrap: anywhere; }
+.pauta footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pauta footer a { color: var(--red); font-weight: 700; }

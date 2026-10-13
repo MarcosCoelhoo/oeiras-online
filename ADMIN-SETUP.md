@@ -33,8 +33,11 @@ e o `/admin` mostra uma tela avisando que falta a configuração.
    [`supabase/seed-exemplos.sql`](supabase/seed-exemplos.sql). Elas entram como **rascunho** e não aparecem
    no site — revise, troque as fotos ilustrativas e publique só o que for real.
 
-### 3. Bloquear cadastros públicos
-**Authentication → Sign In / Providers → Email**: desative **“Allow new users to sign up”**.
+### 3. Bloquear cadastros públicos (sem desligar o login por e-mail!)
+Em **Authentication → Sign In / Providers**:
+- na seção **User Signups**, desative **“Allow new users to sign up”** e clique em **Save changes**;
+- em **Auth Providers**, o provedor **Email** precisa continuar **ENABLED** — se ele for desligado, o painel mostra
+  “Email logins are disabled” e ninguém consegue entrar.
 Assim, ninguém cria conta sozinho. (Mesmo que criasse, não teria acesso: só quem está em `public.admins` entra.)
 
 ### 4. Criar a conta de administrador
@@ -91,6 +94,9 @@ GitHub Pages atualiza o site e o painel passa a funcionar em `/admin`.
   - **Prévia** abre a matéria com o visual do site antes de publicar.
   - O formulário tem cópia de segurança automática no navegador: se a aba fechar sem salvar, o painel oferece
     restaurar as alterações.
+- **Pautas**: mensagens enviadas pelos leitores no formulário “Envie sua pauta” da página inicial. O número ao lado
+  do menu mostra quantas ainda não foram lidas. O contato vira link de WhatsApp ou e-mail; dá para marcar como
+  lida/não lida e excluir. Visitantes só conseguem **enviar** — ninguém além dos administradores lê as mensagens.
 - **Imagens**: galeria das capas enviadas, mostrando onde cada uma é usada. Fotos grandes são reduzidas para
   até 1600 px automaticamente; imagens em uso não podem ser excluídas.
 - **Destaque na capa**: a manchete da página inicial é a notícia em destaque mais recente (ou, se não houver,
@@ -105,7 +111,7 @@ adicione-a ali **e** inclua o mesmo `slug` na restrição `noticias_categoria_va
 Requer Node.js. Na pasta `tests/`:
 ```bash
 npm install
-npm run testar-banco   # 36 testes das regras de segurança num PostgreSQL real (PGlite)
+npm run testar-banco   # 45 testes das regras de segurança num PostgreSQL real (PGlite)
 npm run emulador       # site em http://localhost:5510 ligado a um Supabase local de teste
 ```
 O emulador recria um banco vazio a cada execução, com o mesmo `schema.sql`, e grava contas de teste

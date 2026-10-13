@@ -81,7 +81,7 @@
     try { ok = await verificarAdmin(); } catch (e) { await sb.auth.signOut(); return telaLogin(msgErro(e)); }
     if (!ok) { await sb.auth.signOut(); return telaLogin("Esta conta não tem permissão de administrador."); }
     $("#who").textContent = usuario.email;
-    show("app"); icons(); rotear();
+    show("app"); icons(); rotear(); contarPautas();
   };
   const telaLogin = (erro) => {
     usuario = null; show("login");
@@ -165,6 +165,7 @@
     if (rota === "nova") return editor(null);
     if (rota === "editar" && id) return editor(id);
     if (rota === "imagens") return galeria();
+    if (rota === "pautas") return pautas();
     return lista();
   }
 
@@ -547,6 +548,67 @@
     const { error } = await sb.storage.from(BUCKET).upload(path, file, { cacheControl: "31536000", contentType: file.type, upsert: false });
     if (error) throw error;
     return { url: urlPublica(path), path };
+  }
+
+  // ---------- Pautas enviadas pelos leitores ----------
+  async function contarPautas() {
+    const { count } = await sb.from("pautas").select("id", { count: "exact", head: true }).eq("lida", false);
+    const b = $("#nav-pautas"); b.textContent = count || ""; b.hidden = !count;
+  }
+  const linkContato = (c) => {
+    if (!c) return "";
+    const tel = c.replace(/\D/g, "");
+    if (/@/.test(c)) return `<a href="mailto:${esc(c)}">${esc(c)}</a>`;
+    if (tel.length >= 10) return `<a href="https://wa.me/${tel.length <= 11 ? "55" + tel : tel}" target="_blank" rel="noopener">${esc(c)}</a>`;
+    return esc(c);
+  };
+  let filtroPautas = "naolidas";
+  async function pautas() {
+    const v = $("#view");
+    v.innerHTML = `
+      <div class="v-head">
+        <div><h1>Pautas dos leitores</h1><p class="muted">Mensagens enviadas pelo formulário “Envie sua pauta” do site. Só administradores veem esta lista.</p></div>
+        <div class="seg" id="seg">
+          <button class="btn sm ${filtroPautas === "naolidas" ? "red" : "ghost"}" data-f="naolidas">Não lidas</button>
+          <button class="btn sm ${filtroPautas === "todas" ? "red" : "ghost"}" data-f="todas">Todas</button>
+        </div>
+      </div>
+      <div id="lista-pautas"><div class="loading"><span class="spinner"></span>Carregando pautas…</div></div>`;
+    icons();
+    $("#seg").onclick = (e) => { const b = e.target.closest("[data-f]"); if (b) { filtroPautas = b.dataset.f; pautas(); } };
+    let q = sb.from("pautas").select("*").order("criado_em", { ascending: false }).limit(200);
+    if (filtroPautas === "naolidas") q = q.eq("lida", false);
+    const { data, error } = await q;
+    const box = $("#lista-pautas"); if (!box) return;
+    if (error) { box.innerHTML = `<div class="alert erro">${esc(msgErro(error))}</div>`; return; }
+    if (!data.length) { box.innerHTML = `<div class="empty"><i data-lucide="inbox"></i><h3>${filtroPautas === "naolidas" ? "Nenhuma pauta nova" : "Nenhuma pauta recebida ainda"}</h3></div>`; icons(); return; }
+    box.innerHTML = `<div class="pautas">${data.map((p) => `
+      <article class="pauta ${p.lida ? "lida" : ""}" data-id="${p.id}">
+        <header><b>${esc(p.nome)}</b>${p.local ? ` · ${esc(p.local)}` : ""}<span class="muted">${fmtData(p.criado_em)}</span></header>
+        <p>${esc(p.mensagem).replace(/\n/g, "<br>")}</p>
+        <footer>
+          <span class="muted">${p.contato ? "Contato: " + linkContato(p.contato) : "Sem contato informado"}</span>
+          <span class="ac">
+            <button class="btn ghost sm" data-acao="lida">${p.lida ? '<i data-lucide="mail"></i> Marcar como não lida' : '<i data-lucide="mail-open"></i> Marcar como lida'}</button>
+            <button class="icon-btn danger" data-acao="excluir" title="Excluir" aria-label="Excluir"><i data-lucide="trash-2"></i></button>
+          </span>
+        </footer>
+      </article>`).join("")}</div>`;
+    icons();
+    box.onclick = async (e) => {
+      const b = e.target.closest("[data-acao]"); if (!b) return;
+      const el = b.closest(".pauta"), p = data.find((x) => x.id === el.dataset.id);
+      if (b.dataset.acao === "excluir") {
+        if (!(await confirmar("Excluir pauta?", `A mensagem de “${p.nome}” será apagada permanentemente.`, "Excluir"))) return;
+        const { error } = await sb.from("pautas").delete().eq("id", p.id);
+        if (error) return toast(msgErro(error), "erro");
+        toast("Pauta excluída.");
+      } else {
+        const { error } = await sb.from("pautas").update({ lida: !p.lida }).eq("id", p.id);
+        if (error) return toast(msgErro(error), "erro");
+      }
+      contarPautas(); pautas();
+    };
   }
 
   // ---------- Galeria ----------
