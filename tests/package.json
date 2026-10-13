@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.17"
+  },
+  "name": "oeiras-online-testes",
+  "private": true,
+  "description": "Testes do banco (RLS) e emulador local do Supabase do Oeiras OnLine",
+  "type": "module",
+  "scripts": {
+    "testar-banco": "node testar-rls.mjs",
+    "emulador": "node emulador-supabase.mjs",
+    "gerar-seed": "node gerar-seed-exemplos.cjs"
+  }
+}

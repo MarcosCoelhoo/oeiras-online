@@ -21,30 +21,14 @@
     </div>
   </div>
 
-  <!-- HERO -->
-  <section class="hero wrap">
-    <div class="hero-box">
-      <div class="bg" style="background-image:url('https://picsum.photos/seed/oeiras-hero/1800/1000')"></div>
-      <div class="hero-in">
-        <div>
-          <span class="chip-edicao"><span class="dot"></span>Portal de notícias • Oeiras do Pará</span>
-          <div class="hero-title">
-            <h1>A notícia da<br>nossa terra</h1>
-            <span class="bar"></span>
-          </div>
-          <p class="lead"><i data-lucide="map-pin"></i> Notícias, serviços e comunicados em tempo real</p>
-        </div>
-
-        <div class="live-card" id="aovivo">
-          <button class="play" aria-label="Ouvir ao vivo"><i data-lucide="play"></i></button>
-          <div class="meta">
-            <div class="kicker">RÁDIO / TV <span class="badge-live">AO VIVO</span></div>
-            <h4>Oeiras OnLine</h4>
-            <div class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-          <i data-lucide="volume-2" style="color:var(--muted)"></i>
-        </div>
-      </div>
+  <!-- HERO: manchete do dia + chamadas -->
+  <section class="hero wrap" aria-labelledby="manchete-titulo">
+    <h1 class="sr-only">Oeiras OnLine — portal de notícias de Oeiras do Pará</h1>
+    <div class="hero-grid">
+      <a class="hero-box" id="manchete">
+        <div class="hero-in"><div class="loading light"><span class="spinner"></span>Carregando manchete…</div></div>
+      </a>
+      <div class="hero-side" id="hero-side" aria-label="Outras manchetes"></div>
     </div>
   </section>
 
@@ -98,33 +82,33 @@
             </div>
           </div>
           <div class="panel">
-            <h3><i data-lucide="trending-up" style="color:var(--red)"></i> Mais lidas</h3>
+            <h3><i data-lucide="trending-up"></i> Mais lidas</h3>
             <div class="rank" id="rank"></div>
           </div>
           <div class="panel">
-            <h3><i data-lucide="phone" style="color:var(--blue-2)"></i> Telefones úteis</h3>
+            <h3><i data-lucide="phone"></i> Telefones úteis</h3>
             <div class="phones" id="phones"></div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- INSTAGRAM -->
+    <!-- INSTAGRAM (perfil oficial) -->
     <section class="block">
       <div class="insta">
-        <div class="insta-head">
-          <div class="avatar"><span><img src="assets/IDENTIDADE/logos/simbolo-on-branco.png" alt=""></span></div>
-          <div><b>@oeirasonline</b><small>Oeiras OnLine · Oeiras do Pará</small></div>
-          <a class="follow" href="#">Seguir</a>
+        <div class="insta-main">
+          <div class="insta-head">
+            <div class="avatar"><span><img src="assets/IDENTIDADE/logos/simbolo-on-branco.png" alt=""></span></div>
+            <div><b>@oeirasonline</b><small>Oeiras OnLine · perfil oficial no Instagram</small></div>
+          </div>
+          <p>Acompanhe fotos, vídeos e os bastidores da cobertura do Oeiras OnLine no nosso perfil oficial.</p>
+          <a class="follow" href="https://www.instagram.com/oeirasonline/" target="_blank" rel="noopener"><i data-lucide="instagram"></i> Seguir @oeirasonline</a>
         </div>
-        <div class="insta-grid" id="insta"></div>
+        <a class="insta-art" href="https://www.instagram.com/oeirasonline/" target="_blank" rel="noopener" aria-label="Abrir o Instagram do Oeiras OnLine">
+          <img src="assets/IDENTIDADE/logos/logo-vertical-branco.png" alt="">
+          <span><i data-lucide="instagram"></i> instagram.com/oeirasonline</span>
+        </a>
       </div>
-    </section>
-
-    <!-- COLUNISTAS -->
-    <section class="block">
-      <div class="sec-head"><h2><i data-lucide="pen-line"></i> Opinião &amp; Colunistas</h2></div>
-      <div class="cols" id="cols"></div>
     </section>
 
     <!-- NOSSA TERRA -->
@@ -166,7 +150,9 @@
   </main>
 
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/config.js"></script>
   <script src="assets/data.js"></script>
+  <script src="assets/api.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

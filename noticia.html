@@ -15,7 +15,7 @@
     <article class="inner">
       <div class="crumbs" id="crumbs"></div>
       <span id="chip"></span>
-      <h1 id="t"></h1>
+      <h1 id="t"><span class="loading"><span class="spinner"></span>Carregando notícia…</span></h1>
       <p class="sub" id="sub"></p>
 
       <div class="byline">
@@ -28,35 +28,24 @@
         </div>
       </div>
 
-      <figure class="article-img"><img id="hero-img" alt=""><figcaption>Foto ilustrativa · Oeiras OnLine</figcaption></figure>
+      <figure class="article-img" id="capa" hidden><img id="hero-img" alt=""><figcaption id="legenda"></figcaption></figure>
 
-      <!-- Corpo de exemplo — virá do painel administrativo -->
-      <div class="prose">
-        <p>Este é um texto de exemplo para o esboço do portal. Aqui entra o conteúdo completo da matéria, com o lide respondendo o que aconteceu, quem está envolvido, quando, onde e por quê.</p>
-        <p>O segundo parágrafo aprofunda o assunto com dados, contexto e falas de fontes ouvidas pela reportagem. A ideia é manter parágrafos curtos, que facilitam a leitura no celular.</p>
-        <blockquote>“Uma citação de destaque da matéria aparece assim, chamando a atenção do leitor.”</blockquote>
-        <h2>Intertítulo da matéria</h2>
-        <p>Intertítulos ajudam a dividir textos mais longos. Abaixo, um exemplo de foto com legenda dentro do corpo da notícia.</p>
-        <figure>
-          <img src="https://picsum.photos/seed/oeiras-corpo/1200/700" alt="">
-          <figcaption>Legenda da foto · Foto: Oeiras OnLine</figcaption>
-        </figure>
-        <p>O encerramento traz serviço (datas, endereços, telefones) ou os próximos passos do caso, quando houver.</p>
-      </div>
+      <div class="prose" id="corpo"></div>
 
-      <div class="tags"><a href="#">#OeirasDoPará</a><a href="#">#Notícias</a><a href="#">#Cidade</a></div>
-
-      <div class="ad" style="min-height:120px;margin-bottom:24px"><div class="deco"></div><div><h3 style="font-size:20px">Espaço publicitário</h3><p>Banner 728×90</p></div></div>
+      <div class="ad" style="min-height:120px;margin:24px 0"><div class="deco"></div><div><h3 style="font-size:20px">Espaço publicitário</h3><p>Banner 728×90</p></div></div>
     </article>
 
-    <section class="block">
+    <section class="block" id="related-block">
       <div class="sec-head"><h2><i data-lucide="newspaper"></i> Leia também</h2><a class="more" href="noticias.html">Ver todas <i data-lucide="arrow-right"></i></a></div>
-      <div class="cards" id="related" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
+      <div class="cards cards-grid" id="related"></div>
     </section>
   </main>
 
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+  <script src="assets/config.js"></script>
   <script src="assets/data.js"></script>
+  <script src="assets/api.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

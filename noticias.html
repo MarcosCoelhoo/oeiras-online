@@ -12,16 +12,16 @@
 </head>
 <body data-page="lista">
   <main class="wrap">
-    <div class="page-head">
-      <h1 id="titulo">Notícias</h1>
-      <p id="total"></p>
-    </div>
+    <div class="page-head" id="page-head"></div>
     <div class="filters" id="filters" style="margin-top:14px"></div>
-    <div class="cards" id="cards" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))"></div>
+    <div class="cards cards-grid" id="cards"></div>
+    <div class="load-more"><button class="btn ghost" id="more" style="display:none">Carregar mais notícias</button></div>
   </main>
 
   <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="assets/config.js"></script>
   <script src="assets/data.js"></script>
+  <script src="assets/api.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

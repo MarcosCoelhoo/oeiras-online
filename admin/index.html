@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel — Oeiras OnLine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
+  <link rel="icon" type="image/png" href="../assets/IDENTIDADE/logos/favicon.png">
+  <meta name="theme-color" content="#001531">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- Carregando -->
+  <div class="boot" id="boot"><span class="spinner"></span>Carregando painel…</div>
+
+  <!-- Configuração pendente -->
+  <section class="auth-screen" id="setup" hidden>
+    <div class="auth-card wide">
+      <img class="auth-logo" src="../assets/IDENTIDADE/logos/logo-horizontal-azul.png" alt="Oeiras OnLine">
+      <h1>Painel ainda não configurado</h1>
+      <p>Para ativar o painel é preciso conectar o site a um projeto Supabase (banco de dados, login e imagens).</p>
+      <ol>
+        <li>Siga o passo a passo do arquivo <b>ADMIN-SETUP.md</b>, na raiz do projeto.</li>
+        <li>Preencha <code>supabaseUrl</code> e <code>supabaseAnonKey</code> em <code>assets/config.js</code>.</li>
+        <li>Publique o site novamente e recarregue esta página.</li>
+      </ol>
+      <a class="btn ghost" href="../index.html">Voltar ao site</a>
+    </div>
+  </section>
+
+  <!-- Login -->
+  <section class="auth-screen" id="login" hidden>
+    <form class="auth-card" id="login-form" novalidate>
+      <img class="auth-logo" src="../assets/IDENTIDADE/logos/logo-horizontal-azul.png" alt="Oeiras OnLine">
+      <span class="kicker">Área restrita</span>
+      <h1>Acesso administrativo</h1>
+      <p>Entre com o e-mail e a senha de administrador.</p>
+      <div class="alert" id="login-msg" hidden></div>
+      <label class="field"><span>E-mail</span><input type="email" name="email" autocomplete="username" required></label>
+      <label class="field"><span>Senha</span>
+        <span class="pass"><input type="password" name="senha" autocomplete="current-password" required minlength="6">
+        <button type="button" class="eye" data-eye aria-label="Mostrar senha"><i data-lucide="eye"></i></button></span>
+      </label>
+      <button class="btn red block" type="submit" id="login-btn"><i data-lucide="log-in"></i> Entrar</button>
+      <button class="link" type="button" id="forgot">Esqueci minha senha</button>
+    </form>
+  </section>
+
+  <!-- Nova senha (link de recuperação) -->
+  <section class="auth-screen" id="reset" hidden>
+    <form class="auth-card" id="reset-form" novalidate>
+      <img class="auth-logo" src="../assets/IDENTIDADE/logos/logo-horizontal-azul.png" alt="Oeiras OnLine">
+      <h1>Definir nova senha</h1>
+      <div class="alert" id="reset-msg" hidden></div>
+      <label class="field"><span>Nova senha (mínimo 8 caracteres)</span><input type="password" name="senha" autocomplete="new-password" required minlength="8"></label>
+      <label class="field"><span>Repita a nova senha</span><input type="password" name="senha2" autocomplete="new-password" required minlength="8"></label>
+      <button class="btn red block" type="submit"><i data-lucide="key-round"></i> Salvar nova senha</button>
+    </form>
+  </section>
+
+  <!-- Painel -->
+  <div class="app" id="app" hidden>
+    <header class="a-top">
+      <a href="#/noticias" class="a-brand"><img src="../assets/IDENTIDADE/logos/logo-horizontal-azul.png" alt="Oeiras OnLine"><span>Painel</span></a>
+      <nav class="a-nav">
+        <a href="#/noticias" data-route="noticias"><i data-lucide="newspaper"></i><span>Notícias</span></a>
+        <a href="#/nova" data-route="nova"><i data-lucide="square-pen"></i><span>Nova notícia</span></a>
+        <a href="#/imagens" data-route="imagens"><i data-lucide="images"></i><span>Imagens</span></a>
+      </nav>
+      <div class="a-user">
+        <a class="icon-btn" href="../index.html" target="_blank" rel="noopener" title="Ver site" aria-label="Ver site"><i data-lucide="external-link"></i></a>
+        <span class="who" id="who"></span>
+        <button class="btn ghost sm" id="logout"><i data-lucide="log-out"></i><span>Sair</span></button>
+      </div>
+    </header>
+    <main class="a-main" id="view"></main>
+  </div>
+
+  <!-- Diálogo de confirmação -->
+  <div class="modal" id="confirm" hidden>
+    <div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h2 id="confirm-title"></h2>
+      <p id="confirm-text"></p>
+      <div class="modal-actions">
+        <button class="btn ghost" data-confirm="no">Cancelar</button>
+        <button class="btn red" data-confirm="yes" id="confirm-yes">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Galeria (escolher imagem) -->
+  <div class="modal" id="picker" hidden>
+    <div class="modal-card large" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+      <div class="modal-head"><h2 id="picker-title">Escolher imagem da galeria</h2><button class="icon-btn" data-close-picker aria-label="Fechar"><i data-lucide="x"></i></button></div>
+      <div class="gallery" id="picker-grid"></div>
+      <div class="modal-actions"><button class="btn ghost" id="picker-more" hidden>Carregar mais</button></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script src="../assets/config.js"></script>
+  <script src="../assets/data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
