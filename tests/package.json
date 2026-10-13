@@ -4,7 +4,7 @@
   },
   "name": "oeiras-online-testes",
   "private": true,
-  "description": "Testes do banco (RLS) e emulador local do Supabase do Oeiras OnLine",
+  "description": "Testes do banco (RLS) e emulador local do Supabase do Oeiras Online",
   "type": "module",
   "scripts": {
     "testar-banco": "node testar-rls.mjs",

@@ -1,4 +1,4 @@
-// Painel administrativo do Oeiras OnLine.
+// Painel administrativo do Oeiras Online.
 // Autenticação: Supabase Auth (e-mail e senha). Autorização: tabela public.admins + políticas RLS
 // (supabase/schema.sql). Mesmo que alguém altere este arquivo no navegador, o banco recusa leitura
 // de rascunhos, gravação, exclusão e envio de imagens para quem não é administrador.
@@ -328,7 +328,7 @@
     const v = $("#view");
     v.innerHTML = `<div class="loading"><span class="spinner"></span>${id ? "Carregando notícia…" : "Preparando editor…"}</div>`;
     let n = {
-      titulo: "", subtitulo: "", resumo: "", conteudo: "", categoria: "", autor: localStorage.getItem("oo-autor") || "Redação Oeiras OnLine",
+      titulo: "", subtitulo: "", resumo: "", conteudo: "", categoria: "", autor: localStorage.getItem("oo-autor") || "Redação Oeiras Online",
       imagem_url: null, imagem_path: null, imagem_legenda: "", destaque: false, status: "rascunho", publicado_em: new Date().toISOString(),
     };
     if (id) {
@@ -375,7 +375,7 @@
               <button type="button" class="btn ghost sm" id="escolher"><i data-lucide="images"></i> Galeria</button>
               <button type="button" class="btn ghost sm danger" id="remover"><i data-lucide="x"></i> Remover</button>
             </div>
-            <label class="field"><span>Legenda / crédito da foto</span><input name="imagem_legenda" maxlength="200" value="${esc(n.imagem_legenda || "")}" placeholder="Ex.: Feira do açaí · Foto: Oeiras OnLine"></label>
+            <label class="field"><span>Legenda / crédito da foto</span><input name="imagem_legenda" maxlength="200" value="${esc(n.imagem_legenda || "")}" placeholder="Ex.: Feira do açaí · Foto: Oeiras Online"></label>
             <small class="muted">JPG, PNG, WEBP ou GIF. Fotos grandes são reduzidas automaticamente para até 1600 px.</small>
           </div>
         </aside>

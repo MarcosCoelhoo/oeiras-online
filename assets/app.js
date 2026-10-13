@@ -24,7 +24,7 @@
         <span class="u-item hide-sm"><i data-lucide="map-pin"></i>Oeiras do Pará — PA</span>
         <span class="u-item hide-sm"><i data-lucide="cloud-sun"></i>31°</span>
         <div class="u-social">
-          <a href="${OO.INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram do Oeiras OnLine"><i data-lucide="instagram"></i></a>
+          <a href="${OO.INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram do Oeiras Online"><i data-lucide="instagram"></i></a>
           <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
           <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
           <a href="#" aria-label="WhatsApp"><i data-lucide="message-circle"></i></a>
@@ -33,7 +33,7 @@
     </div>
     <header class="topbar" id="topbar">
       <div class="wrap">
-        <a href="index.html" class="brand" aria-label="Oeiras OnLine — página inicial"><img src="${OO.LOGO}" alt="Oeiras OnLine"></a>
+        <a href="index.html" class="brand" aria-label="Oeiras Online — página inicial"><img src="${OO.LOGO}" alt="Oeiras Online"></a>
         <div class="actions">
           <button class="icon-btn" data-open="search" aria-label="Buscar"><i data-lucide="search"></i></button>
           <button class="icon-btn" data-share aria-label="Compartilhar"><i data-lucide="share-2"></i></button>
@@ -58,7 +58,7 @@
     </div>
     <div class="overlay" id="overlay" data-close></div>
     <aside class="drawer" id="drawer" aria-label="Menu">
-      <div class="dh"><img src="${OO.LOGO}" alt="Oeiras OnLine"><button class="icon-btn" data-close aria-label="Fechar"><i data-lucide="x"></i></button></div>
+      <div class="dh"><img src="${OO.LOGO}" alt="Oeiras Online"><button class="icon-btn" data-close aria-label="Fechar"><i data-lucide="x"></i></button></div>
       <nav>
         <a href="index.html" class="hl"><span class="sq"><i data-lucide="house"></i></span>Início</a>
         <a href="noticias.html" class="hl"><span class="sq"><i data-lucide="newspaper"></i></span>Todas as notícias</a>
@@ -72,10 +72,10 @@
       <div class="wrap">
         <div class="grid">
           <div>
-            <img class="logo" src="${OO.LOGO_BRANCO}" alt="Oeiras OnLine">
+            <img class="logo" src="${OO.LOGO_BRANCO}" alt="Oeiras Online">
             <p style="margin-top:12px;max-width:360px">A notícia da nossa terra. Portal de notícias de Oeiras do Pará — notícias locais, serviços e comunicados em tempo real.</p>
             <div class="social">
-              <a class="icon-btn" href="${OO.INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram do Oeiras OnLine"><i data-lucide="instagram"></i></a>
+              <a class="icon-btn" href="${OO.INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram do Oeiras Online"><i data-lucide="instagram"></i></a>
               <a class="icon-btn" href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
               <a class="icon-btn" href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
               <a class="icon-btn" href="#" aria-label="WhatsApp"><i data-lucide="message-circle"></i></a>
@@ -87,7 +87,7 @@
             <li><a href="index.html#envie">Fale com a redação</a></li><li><a href="#">Política de privacidade</a></li>
           </ul></div>
         </div>
-        <div class="copy"><span>© ${new Date().getFullYear()} Oeiras OnLine. Todos os direitos reservados.</span><span>www.oeirasonline.com.br · Oeiras do Pará — PA</span></div>
+        <div class="copy"><span>© ${new Date().getFullYear()} Oeiras Online. Todos os direitos reservados.</span><span>www.oeirasonline.com.br · Oeiras do Pará — PA</span></div>
       </div>
     </footer>
     <nav class="bottom-nav" aria-label="Navegação rápida">
@@ -201,7 +201,7 @@
         } else {
           hero.removeAttribute("href");
           hero.classList.add("hero-vazio");
-          hero.innerHTML = `<div class="hero-in"><img class="hero-logo" src="assets/IDENTIDADE/logos/logo-vertical-branco.png" alt="Oeiras OnLine"><p>As notícias publicadas aparecerão aqui.</p></div>`;
+          hero.innerHTML = `<div class="hero-in"><img class="hero-logo" src="assets/IDENTIDADE/logos/logo-vertical-branco.png" alt="Oeiras Online"><p>As notícias publicadas aparecerão aqui.</p></div>`;
         }
         const side = $("#hero-side");
         side.innerHTML = lado.map((n) => `<a class="side-item" href="${link(n)}">${imgTag(n, "side-thumb")}
@@ -289,7 +289,7 @@
     } else {
       head.innerHTML = `<h1>${q ? `Busca: “${esc(q)}”` : "Todas as notícias"}</h1><p id="total"></p>`;
     }
-    document.title = `${q ? "Busca" : c ? c.nome : "Notícias"} — Oeiras OnLine`;
+    document.title = `${q ? "Busca" : c ? c.nome : "Notícias"} — Oeiras Online`;
     if (q) $("#search input").value = q;
     $("#filters").innerHTML = `<a href="noticias.html" class="f ${!cat ? "on" : ""}">Todas</a>` +
       OO.categorias.map((x) => `<a href="noticias.html?cat=${x.slug}" class="f ${x.slug === cat ? "on" : ""}">${x.nome}</a>`).join("");
@@ -321,7 +321,7 @@
     const limpar = (html) => (window.DOMPurify ? DOMPurify.sanitize(html || "", { ADD_ATTR: ["target"] }) : esc(html));
     const mostrar = (n) => {
       const c = catBy(n.cat);
-      document.title = `${n.titulo} — Oeiras OnLine`;
+      document.title = `${n.titulo} — Oeiras Online`;
       $("#crumbs").innerHTML = `<a href="index.html">Início</a><i data-lucide="chevron-right"></i><a href="noticias.html?cat=${c.slug}">${esc(c.nome)}</a>`;
       $("#chip").innerHTML = chip(c);
       $("#t").textContent = n.titulo;
@@ -346,7 +346,7 @@
         }
         const n = await OO.api.obter(p.get("id") || "");
         if (!n) {
-          document.title = "Notícia não encontrada — Oeiras OnLine";
+          document.title = "Notícia não encontrada — Oeiras Online";
           $("article.inner").innerHTML = `<div class="empty-state"><i data-lucide="file-x"></i><h3>Notícia não encontrada</h3><p>Ela pode ter sido removida ou ainda não foi publicada.</p><a class="btn ghost" href="index.html">Voltar para o início</a></div>`;
           $("#related-block").hidden = true; refreshIcons(); return;
         }

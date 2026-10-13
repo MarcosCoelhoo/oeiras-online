@@ -1,5 +1,5 @@
 -- =====================================================================
--- Oeiras OnLine — banco de dados do portal (Supabase / PostgreSQL)
+-- Oeiras Online — banco de dados do portal (Supabase / PostgreSQL)
 -- Execute este arquivo inteiro no Supabase: SQL Editor → New query → Run.
 -- Pode ser executado mais de uma vez (é idempotente).
 -- =====================================================================

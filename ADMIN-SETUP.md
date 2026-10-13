@@ -1,4 +1,4 @@
-# Painel administrativo do Oeiras OnLine — configuração
+# Painel administrativo do Oeiras Online — configuração
 
 O painel fica em **`/admin`** (em produção: `https://www.oeirasonline.com.br/admin`).
 Ele usa o **Supabase** (plano gratuito) para três coisas:
